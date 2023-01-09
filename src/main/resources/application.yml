@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     platform: postgres
-    url: ${AWS::JDBC_URL}
-    username: ${AWS::JDBC_USERNAME}
-    password: ${AWS::JDBC_PASSWORD}
+    url: ${JDBC_URL}
+    username: ${JDBC_USERNAME}
+    password: ${JDBC_PASSWORD}
     driverClassName: org.postgresql.Driver
   jpa:
     defer-datasource-initialization: true
