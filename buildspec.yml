@@ -1,0 +1,15 @@
+version: 0.1
+
+phases:
+  install:
+    runtime-version:
+      java: coretto11
+  build:
+    commands:
+      - mvn package
+  post_build:
+    commands:
+      - mv target/*.jar app.jar
+artifacts:
+  files:
+    - app.jar
