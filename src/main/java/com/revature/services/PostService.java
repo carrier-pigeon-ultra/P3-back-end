@@ -12,9 +12,11 @@ import com.revature.repositories.PostRepository;
 public class PostService {
 
 	private PostRepository postRepository;
+	private ProfanityService profanityService;
 	
-	public PostService(PostRepository postRepository) {
+	public PostService(PostRepository postRepository, ProfanityService profanityService) {
 		this.postRepository = postRepository;
+		this.profanityService = profanityService;
 	}
 
 	public List<Post> getAll() {
@@ -22,6 +24,7 @@ public class PostService {
 	}
 
 	public Post upsert(Post post) {
+		post.setText(profanityService.censorString(post.getText()));
 		return this.postRepository.save(post);
 	}
 
