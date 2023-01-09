@@ -32,5 +32,3 @@ build/
 ### VS Code ###
 .vscode/
 
-# Protected resources
-src/main/resources/application.yml
