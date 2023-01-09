@@ -3,10 +3,10 @@ server:
 spring:
   datasource:
     platform: postgres
-    url: ${JDBC_URL}
-    username: ${JDBC_USERNAME}
-    password: ${JDBC_PASSWORD}
-    driverClassName: org.postgresql.Driver
+    url: ${RDS_URL}
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   jpa:
     defer-datasource-initialization: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
