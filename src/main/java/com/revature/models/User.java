@@ -33,6 +33,9 @@ public class User {
     @Column(name = "reset_password_token")
     private  String resetPasswordToken;
 
+    public User(int i, String email, String password, String firstName, String lastName) {
+    }
+
     public int getId() {
         return id;
     }

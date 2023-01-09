@@ -34,7 +34,7 @@ public class UserService {
     }
     }
     public User get(String token){
-        return userRepository.findUserByResetToken(token);
+        return userRepository.findUserByResetPasswordToken(token);
     }
 
     public void updatePassword(User user, String newPassword){

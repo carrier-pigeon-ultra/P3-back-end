@@ -3,17 +3,49 @@ server:
 spring:
   datasource:
     platform: postgres
-    url: ${RDS_URL}
-    username: ${RDS_USERNAME}
-    password: ${RDS_PASSWORD}
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://carrrier-pigeon-db.c92ukfffldkd.us-west-2.rds.amazonaws.com:5432/postgres
+    username: "postgres"
+    password: "!AugusT1N3!"
+    driverClassName: org.postgresql.Driver
   jpa:
     defer-datasource-initialization: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+  mail:
+    host: smtp.gmail.com
+    password: password
+    port: 587
+    properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+    username: admin
     #hibernate:
     #  ddl-auto: create-drop
 
     generate-ddl: true
   h2:
     console.enabled: true
+
+#server:
+#  port: 5000
+#spring:
+#  datasource:
+#    platform: postgres
+#    url: ${RDS_URL}
+#    username: ${RDS_USERNAME}
+#    password: ${RDS_PASSWORD}
+#
+#    driver-class-name: org.postgresql.Driver
+#  jpa:
+#    defer-datasource-initialization: true
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    show-sql: true
+#    #hibernate:
+#    #  ddl-auto: create-drop
+#
+#    generate-ddl: true
+#  h2:
+#    console.enabled: true
