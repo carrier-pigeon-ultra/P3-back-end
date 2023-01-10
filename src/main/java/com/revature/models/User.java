@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Data
 @Entity
@@ -20,4 +21,8 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
+    private Date birthday;
+    private String hometown;
+    private String currentResidence;
+    private String biography;
 }
