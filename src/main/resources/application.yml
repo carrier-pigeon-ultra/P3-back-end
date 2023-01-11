@@ -12,16 +12,16 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
   mail:
-    host: smtp.gmail.com
-    password: password
-    port: 587
+    host: smtp-relay.gmail.com
+    password: "zqebbljwcycuomwt"
+    port: 465
     properties:
         mail:
           smtp:
             auth: true
-            starttls:
+            ssl:
               enable: true
-    username: admin
+    username: carrierpigeonultra@gmail.com
     #hibernate:
     #  ddl-auto: create-drop
 
