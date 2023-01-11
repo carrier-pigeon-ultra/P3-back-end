@@ -3,8 +3,6 @@ package com.revature.exceptions;
 public class InvalidOperationException extends RuntimeException {
 
     public InvalidOperationException() {
-    }
-    public InvalidOperationException(String message) {
-        super(message);
+        super("Oops, search text too short. Please try again. Search text must be greater than 0 characters long.");
     }
 }
