@@ -25,4 +25,5 @@ public class User {
     private String hometown;
     private String currentResidence;
     private String biography;
+
 }
