@@ -44,4 +44,11 @@ public class PostController {
         return ResponseEntity.ok(this.postService.getAllTop());
     }
 
+    @GetMapping("/{user_id}")
+    public ResponseEntity<List<Post>> getUsersPosts(@PathVariable int user_id) {
+        return ResponseEntity.ok(postService.getByUserID(user_id));
+    }
+
+
+
 }
