@@ -14,10 +14,12 @@ import com.revature.repositories.PostRepository;
 public class PostService {
 
 	private PostRepository postRepository;
+	private ProfanityService profanityService;
 	private UserRepository userRepository;
-	
-	public PostService(PostRepository postRepository, UserRepository userRepository) {
+  
+	public PostService(PostRepository postRepository, ProfanityService profanityService, UserRepository userRepository) {
 		this.postRepository = postRepository;
+		this.profanityService = profanityService;
 		this.userRepository = userRepository;
 	}
 
@@ -26,6 +28,7 @@ public class PostService {
 	}
 
 	public Post upsert(Post post) {
+		post.setText(profanityService.censorString(post.getText()));
 		return this.postRepository.save(post);
 	}
 
