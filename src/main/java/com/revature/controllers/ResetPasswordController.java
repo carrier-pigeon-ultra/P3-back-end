@@ -3,24 +3,37 @@ package com.revature.controllers;
 import com.revature.dtos.ResetPasswordRequest;
 import com.revature.models.User;
 import com.revature.services.UserService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.net.URL;
+import java.io.IOException;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
+@RequestMapping("/reset-password-form")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://localhost:5000"}, allowCredentials = "true")
 public class ResetPasswordController {
 
     UserService userService;
-    URL url;
+//    URL url;
 
-    public void resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest){
+    @Autowired
+    public ResetPasswordController(UserService userService){
+        this.userService = userService;
+    }
+    @PostMapping("/{token}")
+//    @PostMapping("/token")
+    public void resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest, @PathVariable String token) throws IOException {
 
+//        url.openStream();
+        User user = userService.get(token);
         String newPassword = resetPasswordRequest.getPassword();
-        User user = userService.get(url.getFile());
-        System.out.println(user.toString());
+
+        System.out.println(resetPasswordRequest);
+        System.out.println(token);
+
+
+
+//        System.out.println(user.toString());
 
         userService.updatePassword(user,newPassword);
 

@@ -50,7 +50,7 @@ public class ForgotPasswordController {
         properties.put("mail.smtp.auth", "true");
 
         //generate link
-        String resetPasswordLink =  URL +  "/reset-password-form?token=" + token;
+        String resetPasswordLink =  URL +  "/reset-password-form/" + token;
 //        System.out.println(resetPasswordLink);
 
         //Get Session Object and Sign into Account
