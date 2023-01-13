@@ -21,16 +21,14 @@ public class UserService {
     }
 
     public User save(User user) {
-        return userRepository.save(user);
-    }
-
-    public User updateUser(User user) throws UserNotFoundException {
         if (isValidUser(user)) {
-            return save(user);
+            return userRepository.save(user);
         } else {
             throw new UserNotFoundException();
         }
     }
+
+
 
     private boolean isValidUser(User user) {
         return (user.getFirstName() != null && user.getLastName() != null && user.getEmail() != null

@@ -26,7 +26,7 @@ public class ProfileController {
     @PutMapping("/profile")
     ResponseEntity<User> updateUserProfile(@RequestBody User user){
         try {
-            return ResponseEntity.ok(this.userService.updateUser(user));
+            return ResponseEntity.ok(this.userService.save(user));
         } catch(UserNotFoundException e) {
             e.printStackTrace();
             return ResponseEntity.status(400).body(new User(-1,"","","",
