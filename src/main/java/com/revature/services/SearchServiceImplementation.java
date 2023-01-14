@@ -5,11 +5,9 @@ import com.revature.exceptions.InvalidOperationException;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,23 +34,12 @@ public class SearchServiceImplementation implements SearchService {
         return result.stream().map(this::userToSearchResponse).collect(Collectors.toList());
 
     }
-
-    @Override
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-    }
-
     @Override
     public User getUserById(int userId) {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
-//    public final User getAuthenticatedUser() {
-//        String authUserEmail = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-//        return getUserByEmail(authUserEmail);
-//    }
-
-    private SearchResponse userToSearchResponse(User user) {
+     SearchResponse userToSearchResponse(User user) {
         SearchResponse searchResponse = new SearchResponse();
         searchResponse.setId(user.getId());
         searchResponse.setEmail(user.getEmail());

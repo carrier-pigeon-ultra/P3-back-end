@@ -15,9 +15,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByEmailAndPassword(String email, String password);
     Optional<User> findByEmail(String email);
-//    @Query("SELECT u FROM users u WHERE u.email = ?1")
-//    User findByEmailContaining(String email);
 
+
+    Optional<User> findById(int id);
     @Query(value = "select * from users u " +
             "where concat(u.first_name, ' ', u.last_name) like %:name% " +
             "order by u.first_name asc, u.last_name asc",
