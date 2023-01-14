@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.revature.models.Post;
 import com.revature.repositories.PostRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PostService {
@@ -38,5 +39,14 @@ public class PostService {
 		return postRepository.findAllByAuthor(
 				userRepository.findById(userID).orElse(null)
 		);
+	}
+
+	@Transactional
+	@Authorized
+	public Post deletePostById(int postId) {
+
+		postRepository.removeForeignKey(postId);
+		postRepository.deleteById(postId);
+		return null;
 	}
 }

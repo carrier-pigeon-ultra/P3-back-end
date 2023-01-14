@@ -32,8 +32,7 @@ public class UserService {
 
     private boolean isValidUser(User user) {
         return (user.getFirstName() != null && user.getLastName() != null && user.getEmail() != null
-                        && user.getPassword() != null
-                ) && (userRepository.findById(user.getId()).isPresent());
+                        && user.getPassword() != null);
     }
 
 
