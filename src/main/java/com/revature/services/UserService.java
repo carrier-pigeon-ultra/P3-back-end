@@ -30,9 +30,32 @@ public class UserService {
 
 
 
-    private boolean isValidUser(User user) {
+    public boolean isValidUser(User user) {
         return (user.getFirstName() != null && user.getLastName() != null && user.getEmail() != null
-                        && user.getPassword() != null);
+                        && strongPassword(user.getPassword())) || (user.getEmail().length() < 5 );
+    }
+
+
+    public boolean strongPassword(String password) {
+
+        // Confirm password is more than 8 characters long.
+        if (password==null || password.length() < 8) {
+            return false;
+        }
+
+        // Confirm password contains 1 or more numbers, one uppercase character, and one lowercase character.
+        boolean hasNumber = false, hasUppercaseChar = false, hasLowercaseChar = false;
+        for(char c: password.toCharArray()) {
+            if (Character.isDigit(c)) {
+                hasNumber = true;
+            } else if (Character.isUpperCase(c)) {
+                hasUppercaseChar = true;
+            } else if (Character.isLowerCase(c)) {
+                hasLowercaseChar = true;
+            }
+        }
+
+        return hasNumber && hasUppercaseChar && hasLowercaseChar;
     }
 
 
