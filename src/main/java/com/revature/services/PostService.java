@@ -29,7 +29,7 @@ public class PostService {
 	}
 
 	public Post upsert(Post post) {
-		post.setText(profanityService.censorString(post.getText()));
+		profanityService.censorPostAndChildComments(post);
 		return this.postRepository.save(post);
 	}
 
@@ -51,4 +51,5 @@ public class PostService {
 		postRepository.deleteById(postId);
 		return null;
 	}
+
 }

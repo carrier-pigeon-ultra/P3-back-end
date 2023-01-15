@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import com.revature.models.Post;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,6 +15,15 @@ public class ProfanityService {
         RestTemplate externalProfanityFilter = new RestTemplate();
         String response = externalProfanityFilter.getForObject(profanityURI + input, String.class);
         return response;
+    }
+
+    public void censorPostAndChildComments(Post post) {
+        post.setText(censorString(post.getText()));
+
+        for(Post comment:post.getComments()) {
+            censorPostAndChildComments(comment);
+        }
+
     }
 
 }
