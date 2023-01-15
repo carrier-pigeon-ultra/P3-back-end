@@ -16,10 +16,12 @@ public class PostService {
 
 	private PostRepository postRepository;
 	private UserRepository userRepository;
+	private ProfanityService profanityService;
 	
-	public PostService(PostRepository postRepository, UserRepository userRepository) {
+	public PostService(PostRepository postRepository, UserRepository userRepository, ProfanityService profanityService) {
 		this.postRepository = postRepository;
 		this.userRepository = userRepository;
+		this.profanityService = profanityService;
 	}
 
 	public List<Post> getAll() {
@@ -27,6 +29,7 @@ public class PostService {
 	}
 
 	public Post upsert(Post post) {
+		post.setText(profanityService.censorString(post.getText()));
 		return this.postRepository.save(post);
 	}
 
