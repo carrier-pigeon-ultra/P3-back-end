@@ -3,6 +3,9 @@ package com.revature.controllers;
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.SearchResponse;
+import com.revature.exceptions.EmptyFieldsException;
+import com.revature.exceptions.UserNotFoundException;
+import com.revature.exceptions.WeakPasswordException;
 import com.revature.models.User;
 import com.revature.models.UserView;
 import com.revature.repositories.UserRepository;
@@ -42,12 +45,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
-        Optional<User> optional = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
+    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) throws UserNotFoundException {
 
-        if(!optional.isPresent()) {
+        Optional<User> optional;
+
+        try {
+            optional = authService.findByCredentials(loginRequest.getEmail(), loginRequest.getPassword());
+        } catch (UserNotFoundException e) {
             return ResponseEntity.badRequest().build();
         }
+
 
         session.setAttribute("user", optional.get());
 
@@ -73,7 +80,14 @@ public class AuthController {
                 "",
                 "");
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
+        } catch (WeakPasswordException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        } catch (EmptyFieldsException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     //Search other users controller
@@ -88,11 +102,14 @@ public class AuthController {
     }
     @GetMapping("/users/search/{userId}")
     public ResponseEntity<SearchResponse> getUserById(@PathVariable("userId") int userId) {
-       // User authUser = searchService.getAuthenticatedUser();
 
-        System.out.println("---------------"); System.out.println(userId); System.out.println("---------------------");
-        User targetedUser = searchService.getUserById(userId);
-        System.out.println(targetedUser.getEmail());
+        User targetedUser;
+
+        try {
+            targetedUser =searchService.getUserById(userId);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
         return ResponseEntity.ok(new SearchResponse(targetedUser));
     }
 }

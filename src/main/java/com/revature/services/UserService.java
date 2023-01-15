@@ -1,6 +1,8 @@
 package com.revature.services;
 
+import com.revature.exceptions.EmptyFieldsException;
 import com.revature.exceptions.UserNotFoundException;
+import com.revature.exceptions.WeakPasswordException;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -20,19 +22,24 @@ public class UserService {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
-    public User save(User user) {
+    public User save(User user) throws WeakPasswordException, EmptyFieldsException {
         if (isValidUser(user)) {
             return userRepository.save(user);
         } else {
-            throw new UserNotFoundException();
+            throw new EmptyFieldsException();
         }
     }
 
 
 
-    public boolean isValidUser(User user) {
-        return (user.getFirstName() != null && user.getLastName() != null && user.getEmail() != null
-                        && strongPassword(user.getPassword())) || (user.getEmail().length() < 5 );
+    public boolean isValidUser(User user) throws WeakPasswordException {
+
+        if (!strongPassword(user.getPassword())) {
+            throw new WeakPasswordException();
+        }
+
+        return (validStringInput(user.getFirstName()) && validStringInput(user.getLastName())
+                && validStringInput(user.getEmail()));
     }
 
 
@@ -58,5 +65,8 @@ public class UserService {
         return hasNumber && hasUppercaseChar && hasLowercaseChar;
     }
 
+    public boolean  validStringInput(String str) {
+        return str !=null && str.length() > 2;
+     }
 
 }

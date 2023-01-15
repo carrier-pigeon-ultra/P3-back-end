@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import com.revature.exceptions.EmptyFieldsException;
+import com.revature.exceptions.WeakPasswordException;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
 import org.checkerframework.checker.units.qual.A;
@@ -35,13 +37,13 @@ public class UserServiceTestSuit {
     void setUp() {
 
         // Setup users.
-        jacob = new User(1,"password","jacob@gmail.com","Jacob","Smith",
+        jacob = new User(1,"jacob@gmail.com","#$Ac2-----RRRRRRRRRRRRR","Jacob","Smith",
                 null,"Missoula","Missoula","");
-        marcus = new User(2,"password","mark@gmail.com","Marcus","Du Pont",
+        marcus = new User(2,"mark@gmail.com","#$Ac2-----RRRRRRRRRRRRR","Marcus","Du Pont",
                 null,"Missoula","Missoula","");
-        oliver = new User(3,"password","oliver@gmail.com","Oliver","Johnson",
+        oliver = new User(3,"oliver@gmail.com","#$Ac2-----RRRRRRRRRRRRR","Oliver","Johnson",
                 null,"Missoula","Missoula","");
-        invalidUser = new User(3,null,null,"Oliver","Johnson",
+        invalidUser = new User(3,null,"#$Ac2-----RRRRRRRRRRRRR","Oliver","Johnson",
                 null,"Missoula","Missoula","");
 
         List<User> userList = new ArrayList<>();
@@ -60,7 +62,8 @@ public class UserServiceTestSuit {
 
     }
 
-
+    /* Tests confirming strongPassword(String password);
+     returns false for passwords that don't meet criteria of a strong password and true for ones that do.*/
     @Test
     void testStrongPassword_shouldReturnFalse_givenNullPassword() {
         String password = null;
@@ -97,4 +100,34 @@ public class UserServiceTestSuit {
         Assertions.assertTrue(sut.strongPassword(password));
     }
 
+
+    // Tests for isValidUser
+    @Test
+    void testIsValidUser_shouldThrowWeakPasswordException_givenUserWithWeakPassword() {
+        String marcusGoodPassword = marcus.getPassword();
+        marcus.setPassword("A#q");
+        Assertions.assertThrows(WeakPasswordException.class, () -> {sut.isValidUser(marcus); });
+        marcus.setPassword(marcusGoodPassword);
+    }
+    @Test
+    void testIsValidUser_shouldReturnFalse_givenUserHasEmptyFields() throws WeakPasswordException {
+        Assertions.assertFalse(sut.isValidUser(invalidUser));
+    }
+    @Test
+    void testIsValidUser_shouldReturnTrue_givenUserHasNecisaryFieldsDefinedAndStringPassword() throws WeakPasswordException {
+        Assertions.assertTrue(sut.isValidUser(marcus));
+    }
+
+    @Test
+    void testSave_shouldThrowWeakPasswordException_givenUserWithBadPassword() {
+        String marcusGoodPassword = marcus.getPassword();
+        marcus.setPassword("A#q");
+        Assertions.assertThrows(WeakPasswordException.class, () -> {sut.save(marcus);});
+        marcus.setPassword(marcusGoodPassword);
+    }
+
+    @Test
+    void testSave_ShouldReturnUser_givenValidUserAsParam() throws WeakPasswordException, EmptyFieldsException {
+        Assertions.assertEquals(jacob,sut.save(jacob));
+    }
 }

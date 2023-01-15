@@ -1,7 +1,9 @@
 package com.revature.controllers;
 
 import com.revature.annotations.Authorized;
+import com.revature.exceptions.EmptyFieldsException;
 import com.revature.exceptions.UserNotFoundException;
+import com.revature.exceptions.WeakPasswordException;
 import com.revature.models.User;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,12 @@ public class ProfileController {
     ResponseEntity<User> updateUserProfile(@RequestBody User user){
         try {
             return ResponseEntity.ok(this.userService.save(user));
-        } catch(UserNotFoundException e) {
+        } catch(EmptyFieldsException e) {
             e.printStackTrace();
-            return ResponseEntity.status(400).body(new User(-1,"","","",
-                    "",null,"","",""));
+            return ResponseEntity.badRequest().body(null);
+        } catch (WeakPasswordException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
         }
     }
 
