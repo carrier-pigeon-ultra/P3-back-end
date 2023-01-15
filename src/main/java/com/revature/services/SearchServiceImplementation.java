@@ -51,7 +51,7 @@ public class SearchServiceImplementation implements SearchService {
 //        return getUserByEmail(authUserEmail);
 //    }
 
-    private SearchResponse userToSearchResponse(User user) {
+    public SearchResponse userToSearchResponse(User user) {
         SearchResponse searchResponse = new SearchResponse();
         searchResponse.setId(user.getId());
         searchResponse.setEmail(user.getEmail());
