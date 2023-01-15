@@ -1,5 +1,8 @@
 package com.revature.services;
 
+import com.revature.exceptions.EmptyFieldsException;
+import com.revature.exceptions.UserNotFoundException;
+import com.revature.exceptions.WeakPasswordException;
 import com.revature.models.User;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +18,18 @@ public class AuthService {
         this.userService = userService;
     }
 
-    public Optional<User> findByCredentials(String email, String password) {
-        return userService.findByCredentials(email, password);
+    public Optional<User> findByCredentials(String email, String password) throws UserNotFoundException {
+        Optional<User> ret = userService.findByCredentials(email, password);
+
+        if(ret.orElse(null) == null) {
+            throw new UserNotFoundException();
+        } else {
+            return ret;
+        }
+
     }
 
-    public User register(User user) {
+    public User register(User user) throws WeakPasswordException, EmptyFieldsException {
         return userService.save(user);
     }
 }

@@ -9,17 +9,16 @@ import org.springframework.stereotype.Service;
 
 import com.revature.models.Post;
 import com.revature.repositories.PostRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PostService {
 
 	private PostRepository postRepository;
-	private ProfanityService profanityService;
 	private UserRepository userRepository;
-  
-	public PostService(PostRepository postRepository, ProfanityService profanityService, UserRepository userRepository) {
+	
+	public PostService(PostRepository postRepository, UserRepository userRepository) {
 		this.postRepository = postRepository;
-		this.profanityService = profanityService;
 		this.userRepository = userRepository;
 	}
 
@@ -28,7 +27,6 @@ public class PostService {
 	}
 
 	public Post upsert(Post post) {
-		post.setText(profanityService.censorString(post.getText()));
 		return this.postRepository.save(post);
 	}
 
@@ -36,10 +34,18 @@ public class PostService {
 		return postRepository.findAllByPostType(PostType.Top);
 	}
 
-	@Authorized
+
 	public List<Post> getByUserID(int userID) {
 		return postRepository.findAllByAuthor(
 				userRepository.findById(userID).orElse(null)
 		);
+	}
+
+	@Transactional
+	public Post deletePostById(int postId) {
+
+		postRepository.removeForeignKey(postId);
+		postRepository.deleteById(postId);
+		return null;
 	}
 }

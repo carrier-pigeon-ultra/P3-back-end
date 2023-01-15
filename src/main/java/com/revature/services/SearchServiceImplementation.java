@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class SearchServiceImplementation implements SearchService {
-    @Autowired
     private final UserRepository userRepository;
 
     @Autowired
@@ -38,12 +37,12 @@ public class SearchServiceImplementation implements SearchService {
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(String email) throws UserNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
-    public User getUserById(int userId) {
+    public User getUserById(int userId) throws UserNotFoundException {
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
@@ -52,7 +51,7 @@ public class SearchServiceImplementation implements SearchService {
 //        return getUserByEmail(authUserEmail);
 //    }
 
-    private SearchResponse userToSearchResponse(User user) {
+    public SearchResponse userToSearchResponse(User user) {
         SearchResponse searchResponse = new SearchResponse();
         searchResponse.setId(user.getId());
         searchResponse.setEmail(user.getEmail());
