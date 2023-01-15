@@ -34,7 +34,7 @@ public class PostService {
 		return postRepository.findAllByPostType(PostType.Top);
 	}
 
-	@Authorized
+
 	public List<Post> getByUserID(int userID) {
 		return postRepository.findAllByAuthor(
 				userRepository.findById(userID).orElse(null)
@@ -42,7 +42,6 @@ public class PostService {
 	}
 
 	@Transactional
-	@Authorized
 	public Post deletePostById(int postId) {
 
 		postRepository.removeForeignKey(postId);

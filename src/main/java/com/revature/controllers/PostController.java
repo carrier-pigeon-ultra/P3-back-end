@@ -40,6 +40,7 @@ public class PostController {
     }
 
     @GetMapping("/{user_id}")
+    @Authorized
     public ResponseEntity<List<Post>> getUsersPosts(@PathVariable int user_id) {
         return ResponseEntity.ok(postService.getByUserID(user_id));
     }
