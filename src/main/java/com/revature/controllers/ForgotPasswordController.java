@@ -95,7 +95,7 @@ public class ForgotPasswordController {
             System.out.println("sending...");
 
             // Send message
-//            Transport.send(message);
+            Transport.send(message);
             System.out.println(message.getContent());
             System.out.println("Sent message successfully....");
         } catch (MessagingException mex) {
