@@ -52,9 +52,9 @@ public class AuthControllerTest {
     @BeforeEach
     public void setUp() {
         userList = new ArrayList<>();
-        user1 = new User(1,"test1@gmail.com", "password1", "John", "Smith", new Date(1),"test home", "current", "Developer");
-        user2 = new User(2,"test2@gmail.com", "password2", "Mary", "Johnson", new Date(1),"test home", "current", "Developer");
-        user3= new User(3,"test3@gmail.com", "password3", "Jane", "Doe", new Date(1),"test home", "current", "Developer");
+        user1 = new User(1,"test1@gmail.com", "password1", "John", "Smith", new Date(1),"test home", "current", "Developer",null);
+        user2 = new User(2,"test2@gmail.com", "password2", "Mary", "Johnson", new Date(1),"test home", "current", "Developer",null);
+        user3= new User(3,"test3@gmail.com", "password3", "Jane", "Doe", new Date(1),"test home", "current", "Developer",null);
         userList.add(user1);
         userList.add(user2);
         userList.add(user3);

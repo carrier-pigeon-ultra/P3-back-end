@@ -34,7 +34,7 @@ public class AuthServiceTests {
     public void TestAuthPassingFindByCreds() throws UserNotFoundException {
 
         User jacob = new User(1,"jacob@gmail.com","#$Ac2-----RRRRRRRRRRRRR","Jacob","Smith",
-                null,"Missoula","Missoula","");
+                null, null,"Missoula","Missoula","");
 
         when(userService.findByCredentials(jacob.getEmail(), jacob.getPassword())).thenReturn(Optional.of(jacob));
 
