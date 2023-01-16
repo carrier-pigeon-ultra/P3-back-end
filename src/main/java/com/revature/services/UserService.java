@@ -3,6 +3,7 @@ package com.revature.services;
 import com.revature.exceptions.EmptyFieldsException;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.exceptions.WeakPasswordException;
+import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -69,4 +70,24 @@ public class UserService {
         return str !=null && str.length() > 2;
      }
 
+    public void updateResetPassword(String token, String email) throws UserNotFoundException {
+    User user = userRepository.findUserByEmail(email);
+
+    if (user != null){
+        user.setResetPasswordToken(token);
+        userRepository.save(user);
+        }else {
+        throw new UserNotFoundException("Could not find any user with the email of" + email);
+    }
+    }
+    public User get(String token){
+        return userRepository.findUserByResetPasswordToken(token);
+    }
+
+    public void updatePassword(User user, String newPassword){
+        user.setPassword(newPassword);
+        user.setResetPasswordToken(null);
+
+        userRepository.save(user);
+    }
 }

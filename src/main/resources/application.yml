@@ -23,3 +23,14 @@ spring:
         arg:
           - destfile=target/jacoco-it.exec
           - append=true
+  mail:
+    host: smtp-relay.gmail.com
+    password: "zqebbljwcycuomwt"
+    port: 465
+    properties:
+        mail:
+          smtp:
+            auth: true
+            ssl:
+              enable: true
+    username: carrierpigeonultra@gmail.com

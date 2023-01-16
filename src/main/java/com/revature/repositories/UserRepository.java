@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByEmailAndPassword(String email, String password);
+
     Optional<User> findByEmail(String email);
 //    @Query("SELECT u FROM users u WHERE u.email = ?1")
 //    User findByEmailContaining(String email);
@@ -24,4 +25,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             nativeQuery = true)
     List<User> findUsersByName(String name, Pageable pageable);
 
+
+    User findUserByEmail(String email);
+    User findUserByResetPasswordToken(String token);
+//    void enable(Integer id);
 }
