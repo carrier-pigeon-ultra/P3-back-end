@@ -16,7 +16,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000",  "http://codepipeline-us-west-2-791209503483.s3-website-us-west-2.amazonaws.com",
+        "http://carrier-pigeon-client-not-pipline.s3-website-us-west-2.amazonaws.com"}, allowCredentials = "true")
 public class ForgotPasswordController {
 
     @Autowired
@@ -38,7 +39,8 @@ public class ForgotPasswordController {
         String token = RandomString.make(45);
         String from = "carrierpigeonultra@gmail.com";
         String host = "smtp.gmail.com";
-        String URL = "localhost:4200";
+//        String URL = "localhost:4200";
+        String URL = "http://carrier-pigeon-client-not-pipline.s3-website-us-west-2.amazonaws.com";
 
         //Get System Properties
         Properties properties = System.getProperties();
