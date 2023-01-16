@@ -13,6 +13,8 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,8 @@ import static org.mockito.Mockito.when;
  * Note: Tests will fail if run individually because environment variables are set for entire test suite.
  * */
 @SpringBootTest
+@ActiveProfiles("test")
+@TestPropertySource(locations = "classpath:application-test.yml")
 public class PostServiceTestSuit {
 
     @MockBean
