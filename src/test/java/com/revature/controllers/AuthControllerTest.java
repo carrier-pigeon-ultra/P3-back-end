@@ -45,4 +45,68 @@ import static org.mockito.Mockito.when;
 @TestPropertySource(locations = "classpath:application-test.yml")
 public class AuthControllerTest {
 
+        @MockBean
+        private SearchServiceImplementation searchService;
+    @MockBean
+    private AuthService authService;
+        @Autowired
+        @InjectMocks
+        private AuthController sut;
+    private User user1;
+    private User user2;
+    private User user3;
+    List<User> userList;
+    @BeforeEach
+    public void setUp() {
+        userList = new ArrayList<>();
+        user1 = new User(1,"test1@gmail.com", "password1", "John", "Smith", new Date(1),"test home", "current", "Developer",null);
+        user2 = new User(2,"test2@gmail.com", "password2", "Mary", "Johnson", new Date(1),"test home", "current", "Developer",null);
+        user3= new User(3,"test3@gmail.com", "password3", "Jane", "Doe", new Date(1),"test home", "current", "Developer",null);
+        userList.add(user1);
+        userList.add(user2);
+        userList.add(user3);
+    }
+    @AfterEach
+    public void tearDown() {
+        user1 = user2 = user3 = null;
+        userList = null;
+    }
+    @Test
+    void testSearchUserController() {
+        // given
+        String searchText = "John";
+        Integer page = 1;
+        Integer size = 1;
+
+//        List<SearchResponse> userSearchResult = Arrays.asList(
+//                new SearchResponse(user1)
+//                );
+        List<SearchResponse> ActualUserSearchResult = new ArrayList<>();
+        ActualUserSearchResult.add(new SearchResponse(user1));
+        when(searchService.getUserSearchResult(searchText, page, size)).thenReturn(ActualUserSearchResult);
+
+        // when
+        //ResponseEntity<List<SearchResponse>> response = (ResponseEntity<List<SearchResponse>>) sut.searchUser(searchText, page, size);
+        ResponseEntity<List<SearchResponse>> expectedUserSearchResult = (ResponseEntity<List<SearchResponse>>) sut.searchUser(searchText, page, size);
+
+        // then
+        assertEquals(HttpStatus.OK, expectedUserSearchResult.getStatusCode());
+        assertEquals(ActualUserSearchResult, expectedUserSearchResult.getBody());
+        verify(searchService).getUserSearchResult(searchText, page, size);
+    }
+        @Test
+    public void testGetUserById() throws UserNotFoundException {
+            // given
+            int userId = 1;
+
+            when(searchService.getUserById(userId)).thenReturn(user1);
+
+            ResponseEntity<?> response = sut.getUserById(userId);
+
+            // then
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+            assertEquals(user1, response.getBody());
+        }
+
+
 }

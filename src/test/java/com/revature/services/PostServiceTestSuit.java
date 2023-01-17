@@ -53,11 +53,11 @@ public class PostServiceTestSuit {
 
         // Setup users.
         jacob = new User(1,"password","jacob@gmail.com","Jacob","Smith",
-                null,"Missoula","Missoula","");
+                null,"Missoula","Missoula","",null);
         marcus = new User(2,"password","mark@gmail.com","Marcus","Du Pont",
-                null,"Missoula","Missoula","");
+                null,"Missoula","Missoula","",null);
         oliver = new User(3,"password","oliver@gmail.com","Oliver","Johnson",
-                null,"Missoula","Missoula","");
+                null,"Missoula","Missoula","",null);
 
         // Setup posts.
         postA = new Post(1,"","",null,jacob,PostType.Top);

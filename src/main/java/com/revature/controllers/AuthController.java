@@ -1,6 +1,9 @@
 package com.revature.controllers;
 
+import com.revature.Utility.JWTUtility;
+import com.revature.annotations.Authorized;
 import com.revature.dtos.LoginRequest;
+import com.revature.dtos.LoginResponse;
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.SearchResponse;
 import com.revature.exceptions.EmptyFieldsException;
@@ -17,11 +20,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
@@ -37,16 +44,19 @@ public class AuthController {
     private final UserService userService;
 
     private final SearchService searchService;
+    private JWTUtility jwtUtility;
 
     @Autowired
-    public AuthController(AuthService authService, SearchServiceImplementation searchService, UserService userService) {
+    public AuthController(AuthService authService, SearchServiceImplementation searchService,
+                          UserService userService, JWTUtility jwtUtility) {
         this.authService = authService;
         this.searchService = searchService;
         this.userService = userService;
+        this.jwtUtility = jwtUtility;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) throws UserNotFoundException {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse resp) {
 
         Optional<User> optional;
 
@@ -57,9 +67,17 @@ public class AuthController {
         }
 
 
-        session.setAttribute("user", optional.get());
+        String token = jwtUtility.createToken(optional.get());
 
-        return ResponseEntity.ok(optional.get());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization",token);
+
+        System.out.println("---------------------------------------------------");
+        System.out.println(optional.get().toString());
+
+        return ResponseEntity.ok().headers(headers).body(
+                new LoginResponse(optional.orElse(null),token)
+        );
     }
 
     @PostMapping("/logout")
@@ -76,10 +94,12 @@ public class AuthController {
                 registerRequest.getPassword(),
                 registerRequest.getFirstName(),
                 registerRequest.getLastName(),
+
                 registerRequest.getBirthday(),
+
                 "",
                 "",
-                "");
+                "",null);
 
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(created));
@@ -112,5 +132,22 @@ public class AuthController {
             return ResponseEntity.badRequest().body(null);
         }
         return ResponseEntity.ok(new SearchResponse(targetedUser));
+    }
+
+    @Authorized
+    @GetMapping("users/token")
+    public ResponseEntity<User> getUserFromToken(){
+        User ret;
+        String token = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                .getRequest().getHeader("Authorization");
+        System.out.println("---GET USER FROM TOKEN -----");
+        System.out.println(token);
+        try {
+            ret = jwtUtility.extractTokenDetails(token);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        ret.setPassword(null);
+        return ResponseEntity.ok(ret);
     }
 }

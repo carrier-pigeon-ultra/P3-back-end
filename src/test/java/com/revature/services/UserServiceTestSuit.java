@@ -42,13 +42,13 @@ public class UserServiceTestSuit {
 
         // Setup users.
         jacob = new User(1,"jacob@gmail.com","#$Ac2-----RRRRRRRRRRRRR","Jacob","Smith",
-                null,"Missoula","Missoula","");
+                null,"Missoula","Missoula","",null);
         marcus = new User(2,"mark@gmail.com","#$Ac2-----RRRRRRRRRRRRR","Marcus","Du Pont",
-                null,"Missoula","Missoula","");
+                null,"Missoula","Missoula","",null);
         oliver = new User(3,"oliver@gmail.com","#$Ac2-----RRRRRRRRRRRRR","Oliver","Johnson",
-                null,"Missoula","Missoula","");
+                null,"Missoula","Missoula","",null);
         invalidUser = new User(3,null,"#$Ac2-----RRRRRRRRRRRRR","Oliver","Johnson",
-                null,"Missoula","Missoula","");
+                null,"Missoula","Missoula","",null);
 
         List<User> userList = new ArrayList<>();
         userList.add(jacob);

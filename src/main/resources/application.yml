@@ -38,3 +38,6 @@ spring:
             ssl:
               enable: true
     username: ${MAIL_USERNAME}
+
+jwt:
+  secret: ${JWT_SECRET}
