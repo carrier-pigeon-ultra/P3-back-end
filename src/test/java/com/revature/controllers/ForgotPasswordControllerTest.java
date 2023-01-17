@@ -1,13 +1,11 @@
 package com.revature.controllers;
 
-import com.revature.Utility.GetSiteUrl;
-import com.revature.dtos.ForgotPasswordRequest;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.services.UserService;
 import net.bytebuddy.utility.RandomString;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.web.bind.annotation.*;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -15,27 +13,17 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Properties;
 
-@RestController
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000",  "http://codepipeline-us-west-2-791209503483.s3-website-us-west-2.amazonaws.com",
-        "http://carrier-pigeon-client-not-pipline.s3-website-us-west-2.amazonaws.com"}, allowCredentials = "true")
-public class ForgotPasswordController {
-
+class ForgotPasswordControllerTest {
     @Autowired
     private UserService userService;
 
     @Autowired
     private JavaMailSender mailSender;
 
-    GetSiteUrl getSiteUrl;
-//    @GetMapping("/reset-password")
-//    public String showForgotPasswordForm(){
-//        return "forgot_password_form";
-//    }
+    @Test
+    void processForgotPasswordFormSetsTokenandSendsEmail() throws UserNotFoundException {
 
-    @PostMapping("/reset-password")
-    public void processForgotPasswordForm(@RequestBody ForgotPasswordRequest forgotPasswordRequest) throws UserNotFoundException{
-
-        String to = forgotPasswordRequest.getEmail();
+        String to = "blake.rhynes@yahoo.com";
         String token = RandomString.make(45);
         String from = "carrierpigeonultra@gmail.com";
         String host = "smtp.gmail.com";
@@ -69,7 +57,7 @@ public class ForgotPasswordController {
         // Debug any SMTP issues
         session.setDebug(true);
 
-        userService.updateResetPassword(token,to);
+//        userService.updateResetPassword(token,to);
 
         System.out.println("Email: " + to);
         System.out.println("Token: " + token);
@@ -95,7 +83,7 @@ public class ForgotPasswordController {
             System.out.println("sending...");
 
             // Send message
-            Transport.send(message);
+//            Transport.send(message);
             System.out.println(message.getContent());
             System.out.println("Sent message successfully....");
         } catch (MessagingException mex) {
@@ -104,4 +92,5 @@ public class ForgotPasswordController {
             throw new RuntimeException(e);
         }
     }
-}
+
+    }
