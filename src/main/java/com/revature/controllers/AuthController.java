@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import com.revature.Utility.JWTUtility;
 import com.revature.dtos.LoginRequest;
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.SearchResponse;
@@ -22,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
@@ -38,16 +40,19 @@ public class AuthController {
     private final UserService userService;
 
     private final SearchService searchService;
+    private JWTUtility jwtUtility;
 
     @Autowired
-    public AuthController(AuthService authService, SearchServiceImplementation searchService, UserService userService) {
+    public AuthController(AuthService authService, SearchServiceImplementation searchService,
+                          UserService userService, JWTUtility jwtUtility) {
         this.authService = authService;
         this.searchService = searchService;
         this.userService = userService;
+        this.jwtUtility = jwtUtility;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpSession session) throws UserNotFoundException {
+    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpServletResponse resp) throws UserNotFoundException {
 
         Optional<User> optional;
 
@@ -58,8 +63,9 @@ public class AuthController {
         }
 
 
-        session.setAttribute("user", optional.get());
-
+        resp.setHeader("Authorization", jwtUtility.createToken(
+                optional.orElse(null)
+        ));
         return ResponseEntity.ok(optional.get());
     }
 
