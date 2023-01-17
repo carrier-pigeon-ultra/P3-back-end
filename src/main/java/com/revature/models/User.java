@@ -50,4 +50,21 @@ public class User {
         this.lastName = lastName;
 
     }
+
+
+    public User(int id, String email, String password, String firstName, String lastName,Date birthday, String hometown, String currentResidence, String biography) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.hometown = hometown;
+        this.currentResidence = currentResidence;
+        this.biography = biography;
+        this.resetPasswordToken = null;
+
+    }
+
+
 }

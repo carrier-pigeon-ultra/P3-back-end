@@ -13,8 +13,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Date;
@@ -25,8 +29,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@ActiveProfiles("test")
+@TestPropertySource(locations = "classpath:application-test.yml")
 public class SearchServiceImplementationTests {
-    @Mock
+    @MockBean
     private   UserRepository userRepository;
 
     @Autowired
@@ -44,6 +51,11 @@ public class SearchServiceImplementationTests {
         user3= new User(3,"test3@gmail.com", "password3", "Jane", "Doe", new Date(1),"test home", "current", "Developer", null);
         userList.add(user1);
         userList.add(user2);
+
+        for(User user:userList) {
+            userRepository.save(user);
+        }
+
     }
     @AfterEach
     public void tearDown() {

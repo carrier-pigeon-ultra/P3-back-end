@@ -20,7 +20,8 @@ public class ProfanityService {
     public void censorPostAndChildComments(Post post) {
         post.setText(censorString(post.getText()));
 
-        if (post.getComments()==null) {
+
+        if(post.getComments()==null) {
             return;
         }
 

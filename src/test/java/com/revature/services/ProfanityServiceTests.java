@@ -8,8 +8,13 @@ import com.revature.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
+
 
 @SpringBootTest
+@ActiveProfiles("test")
+@TestPropertySource(locations = "classpath:application-test.yml")
 class ProfanityServiceTests {
 
     @Autowired
