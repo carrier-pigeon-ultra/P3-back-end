@@ -36,4 +36,4 @@ spring:
     username: ${MAIL_USERNAME}
 
 jwt:
-  secret: ThisIsTheJWTSECRETSECRE78
+  secret: ${JWT_SECRET}

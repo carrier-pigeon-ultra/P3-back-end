@@ -5,6 +5,7 @@ import com.revature.repositories.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -19,18 +20,20 @@ import java.util.Optional;
 public class JWTUtility {
 
 
-    @Value("$jwt.secret")
+    @Value("${jwt.secret}")
     String secret;
     byte[] bytes;
     UserRepository userRepository;
 
+    @Autowired
     public JWTUtility(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @PostConstruct
     public void createBytes(){
-        bytes = Base64.getEncoder().encode(Base64.getEncoder()
+        bytes = Base64
+                .getEncoder().encode(Base64.getEncoder()
                 .encode(secret.getBytes()));
 
     }
@@ -43,7 +46,6 @@ public class JWTUtility {
     }
 
     public String createToken(User user) {
-
         JwtBuilder tokenBuilder = Jwts.builder()
                 .setId(user.getEmail())
                 .setSubject(user.getEmail())
@@ -72,7 +74,7 @@ public class JWTUtility {
                 .parseClaimsJws(token)
                 .getBody();
 
-        return userRepository.findById(Integer.parseInt(claims.getId()));
+        return userRepository.findById((Integer) claims.get("user_id"));
     }
 
     public User extractTokenDetails(String token) throws Exception {

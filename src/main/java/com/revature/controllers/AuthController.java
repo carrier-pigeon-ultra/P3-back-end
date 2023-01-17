@@ -66,6 +66,10 @@ public class AuthController {
         resp.setHeader("Authorization", jwtUtility.createToken(
                 optional.orElse(null)
         ));
+
+        System.out.println("---------------------------------------------------");
+        System.out.println(optional.get().toString());
+
         return ResponseEntity.ok(optional.get());
     }
 

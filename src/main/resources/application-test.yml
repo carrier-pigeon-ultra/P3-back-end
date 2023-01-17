@@ -25,3 +25,5 @@ spring:
           ssl:
             enable: true
     username: mail_username@gmail.com
+jwt:
+  secret: BeforeTheSecretWasTooShortSoThisIsALongSecretLetsSeeIfJavaLikesThis
