@@ -10,8 +10,8 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/reset-password-form")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://localhost:5000","http://codepipeline-us-west-2-791209503483.s3-website-us-west-2.amazonaws.com",
-        "http://carrier-pigeon-client-not-pipline.s3-website-us-west-2.amazonaws.com"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000", "http://localhost:5000",
+        "http://codepipeline-us-west-2-791209503483.s3-website-us-west-2.amazonaws.com"}, allowCredentials = "true")
 public class ResetPasswordController {
 
     UserService userService;
