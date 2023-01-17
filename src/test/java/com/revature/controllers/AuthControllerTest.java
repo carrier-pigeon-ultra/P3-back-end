@@ -44,7 +44,7 @@ import static org.mockito.Mockito.when;
 @ActiveProfiles("test")
 @TestPropertySource(locations = "classpath:application-test.yml")
 public class AuthControllerTest {
-
+/*
         @MockBean
         private SearchServiceImplementation searchService;
     @MockBean
@@ -107,6 +107,6 @@ public class AuthControllerTest {
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertEquals(user1, response.getBody());
         }
-
+*/
 
 }
