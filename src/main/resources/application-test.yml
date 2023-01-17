@@ -1,0 +1,27 @@
+server:
+  port: 5000
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+  datasource:
+    url: jdbc:h2:mem:memdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console.enabled: true
+
+  mail:
+    host: smtp-relay.gmail.com
+    password: mail_password
+    port: 465
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+    username: mail_username@gmail.com

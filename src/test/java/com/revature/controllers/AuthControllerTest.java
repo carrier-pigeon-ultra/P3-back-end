@@ -19,9 +19,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 
 import java.sql.Date;
@@ -37,7 +40,11 @@ import static org.mockito.Mockito.when;
 @AutoConfigureMockMvc
 //@RunWith(SpringRunner.class)
 @WebMvcTest(AuthController.class)
+@SpringBootTest
+@ActiveProfiles("test")
+@TestPropertySource(locations = "classpath:application-test.yml")
 public class AuthControllerTest {
+
         @MockBean
         private SearchServiceImplementation searchService;
     @MockBean
@@ -100,5 +107,6 @@ public class AuthControllerTest {
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertEquals(user1, response.getBody());
         }
+
 
 }
