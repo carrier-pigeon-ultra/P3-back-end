@@ -22,5 +22,9 @@ pom.xml file.
 
 # Instructions to run
 <ul>
-  <li>Star instance of </li>
+  <li>Refresh pom.xml file</li>
+  <li>Configure environment variables</li>
+  <li>Ensure PostgreSQL database is running.</li>
+  <li>Run main method in SocialMediaApplication</li>
+  <li>Start instance of front end cloned from https://github.com/carrier-pigeon-ultra/P3-front-end</li>
 </ul>
