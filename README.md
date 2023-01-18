@@ -8,6 +8,7 @@ This is the back end portion of the carrier-pigeon ultra social media web applic
 
 # Software versions
 <ul>
+  <li> apache-maven 3.8.5 </li>
   <li> Java 11
   <li> Springboot 2.7.1
 </ul>
