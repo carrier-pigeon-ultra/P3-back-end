@@ -22,7 +22,7 @@ This is the back end portion of the carrier-pigeon ultra social media web applic
 
 # Features developed in this sprint
 <ul>
-  <li> Auth Service: Users can log in and will get an exception response if not registered
+  <li> Auth Service: Users can log in and will get an exception response if not registered or if providing incorrect credentials
   <li> View Post Service: Users can query all posts, top posts, individual users posts, and delete their own posts
   <li> Post Service: Users can make posts, and create comments. Comments are posts themselves and carry a post ID as well
   <li> User Service: Users must set a strong password, they are able to create a personal page that includes their hometown, birthday, current residence, and biography
