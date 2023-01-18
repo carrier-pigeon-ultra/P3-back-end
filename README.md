@@ -32,5 +32,5 @@ This is the back end portion of the carrier-pigeon ultra social media web applic
   <li> Forgot Password: Using gmail smtp a user can reset their password via a link sent to their email. User is assigned a temporary token and that token is then emailed to a registered email. Once clicking the link and using another strong password, then the token will be set back to null.
 </ul>
 
-# P3-back-end
-This is a repository for final project Social Media Application
+# Link to deployed application
+http://codepipeline-us-west-2-791209503483.s3-website-us-west-2.amazonaws.com/
