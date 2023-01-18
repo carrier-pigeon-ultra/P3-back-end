@@ -112,7 +112,7 @@ public class PostServiceTestSuit {
     }
 
     @Test
-    void testDeleteByUserID_shouldDeletePostGivenVlidPostId() {
+    void testDeleteByUserID_shouldDeletePostGivenValidPostId() {
         assertNull(sut.deletePostById(postA.getId()));
     }
 

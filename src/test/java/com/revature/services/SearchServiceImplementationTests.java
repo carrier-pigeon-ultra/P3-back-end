@@ -26,6 +26,7 @@ import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,6 +36,9 @@ import static org.mockito.Mockito.when;
 public class SearchServiceImplementationTests {
     @MockBean
     private   UserRepository userRepository;
+    UserRepository userRepository1 = mock(UserRepository.class);
+
+    SearchServiceImplementation service = new SearchServiceImplementation(userRepository1);
 
     @Autowired
     @InjectMocks
@@ -67,6 +71,15 @@ public class SearchServiceImplementationTests {
     public void givenIdThenShouldReturnUserOfThatId() throws UserNotFoundException {
         when(userRepository.findById(1)).thenReturn(Optional.ofNullable(user1));
         assertThat(sut.getUserById(user1.getId())).isEqualTo(user1);
+    }
+
+    @Test
+    public void givenEmailThenShouldReturnUserOfThatEmail() throws UserNotFoundException {
+        User expectedUser = user1;
+        when(userRepository1.findByEmail("test1@gmail.com")).thenReturn(Optional.of(expectedUser));
+        User actualUser = service.getUserByEmail("test1@gmail.com");
+        assertEquals(expectedUser, actualUser);
+
     }
     @Test
     public void testGetUserSearchResult_validInput_returnsList() {
