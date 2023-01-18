@@ -28,7 +28,7 @@ This is the back end portion of the carrier-pigeon ultra social media web applic
   <li> User Service: Users must set a strong password, they are able to create a personal page that includes their hometown, birthday, current residence, and biography
   <li> User Search: Users can search for other users by name, id, or email. Returns a list of users matching criteria
   <li> Profanity Filter: Using Purgomalum API, swear words are "purged" or censored from view
-  <li> Forgot Password: Using gmail smtp a user can reset their password via a link sent to their email
+  <li> Forgot Password: Using gmail smtp a user can reset their password via a link sent to their email. User is assigned a temporary token and that token is then emailed to a registered email. Once clicking the link and using another strong password, then the token will be set back to null.
 </ul>
 
 # P3-back-end
