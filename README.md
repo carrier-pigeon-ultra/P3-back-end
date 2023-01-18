@@ -6,19 +6,6 @@ This project was developed using Java 11 and Springboot 2.7.1.
 
 This is the back end portion of the carrier-pigeon ultra social media web application for the final project at Revature, the front end can be found at https://github.com/carrier-pigeon-ultra/P3-front-end.
 
-# Application Features
-
-<ul>
-  <li>Users can register and create profiles for themselves.</li>
-  <li>Users can edit information associated with their profile.</li>
-  <li>Users can write posts, and read posts from other users.</li>
-  <li>Users can reply to posts.</li>
-  <li>Users can delete their posts.</li>
-  <li>Users can request a reset password link which is sent to the email associated with their account.</li>
-  <li>Users can search for other users, and view their profile and postfeed.</li>
-  <li>Profanity filter censors profane language, keeping the website family freindly.</li>
-</ul>
-
 # Software versions
 <ul>
   <li> apache-maven 3.8.5 </li>
