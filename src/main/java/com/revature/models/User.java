@@ -42,14 +42,14 @@ public class User {
     @Column(name = "reset_password_token")
     private  String resetPasswordToken;
 
-    public User(int id, String email, String password, String firstName, String lastName) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-
-    }
+//    public User(int id, String email, String password, String firstName, String lastName) {
+//        this.id = id;
+//        this.email = email;
+//        this.password = password;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//
+//    }
 
 
     public User(int id, String email, String password, String firstName, String lastName,Date birthday, String hometown, String currentResidence, String biography) {
