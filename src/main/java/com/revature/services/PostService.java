@@ -28,6 +28,7 @@ public class PostService {
 		return this.postRepository.findAll();
 	}
 
+	@Transactional
 	public Post upsert(Post post) {
 		profanityService.censorPostAndChildComments(post);
 		return this.postRepository.save(post);

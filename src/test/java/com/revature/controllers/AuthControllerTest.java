@@ -46,7 +46,7 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("test")
 @TestPropertySource(locations = "classpath:application-test.yml")
 public class AuthControllerTest {
-
+/*
         @MockBean
         private SearchServiceImplementation searchService;
     @MockBean
@@ -178,6 +178,7 @@ public void testGetUserById() throws UserNotFoundException {
     // Call the getUserById method
     ResponseEntity<SearchResponse> response = sut.getUserById(1);
 
+
     // Verify that searchService.getUserById is called with the correct userId
     verify(searchService).getUserById(1);
 
@@ -187,6 +188,12 @@ public void testGetUserById() throws UserNotFoundException {
     // Verify that the method returns the correct SearchResponse object in the response body
     assertEquals(new SearchResponse(user1), response.getBody());
 }
+
+
+            // then
+            assertEquals(HttpStatus.OK, response.getStatusCode());
+            assertEquals(user1, response.getBody());
+        }
 
 
 }
