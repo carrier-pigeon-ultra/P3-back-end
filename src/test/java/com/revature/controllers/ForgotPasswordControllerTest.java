@@ -17,7 +17,8 @@ import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.when;
+
 
 @ExtendWith({MockitoExtension.class})
 @SpringBootTest

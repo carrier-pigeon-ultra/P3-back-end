@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import com.revature.controllers.AuthController;
 import com.revature.dtos.LoginRequest;
+import com.revature.dtos.LoginResponse;
 import com.revature.dtos.RegisterRequest;
 import com.revature.dtos.SearchResponse;
 import com.revature.exceptions.EmptyFieldsException;
@@ -31,6 +32,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -46,13 +48,15 @@ import static org.mockito.Mockito.*;
 @ActiveProfiles("test")
 @TestPropertySource(locations = "classpath:application-test.yml")
 public class AuthControllerTest {
-/*
+
         @MockBean
         private SearchServiceImplementation searchService;
     @MockBean
     private AuthService authService;
     @Mock
     private HttpSession httpSession;
+    @Mock
+    private HttpServletResponse httpServletResponse;
     @MockBean
     UserRepository userRepository;
         @Autowired
@@ -91,10 +95,10 @@ public class AuthControllerTest {
 
         when(authService.findByCredentials(anyString(), anyString())).thenReturn(Optional.of(user));
 
-        ResponseEntity<User> response = sut.login(loginRequest, httpSession);
+        ResponseEntity<LoginResponse> response = sut.login(loginRequest, httpServletResponse);
 
         assertEquals(200, response.getStatusCodeValue());
-        assertEquals("test@example.com", response.getBody().getEmail());
+        assertEquals("test@example.com", response.getBody());
         verify(httpSession).setAttribute(eq("user"), eq(user));
     }
    @Test
@@ -105,7 +109,7 @@ public class AuthControllerTest {
 
        when(authService.findByCredentials(anyString(), anyString())).thenReturn(Optional.empty());
 
-       ResponseEntity<?> response = sut.login(loginRequest, httpSession);
+       ResponseEntity<?> response = sut.login(loginRequest, httpServletResponse);
 
        assertEquals(400, response.getStatusCodeValue());
        verify(httpSession).setAttribute(eq("user"), eq(null));
@@ -187,12 +191,6 @@ public void testGetUserById() throws UserNotFoundException {
 
     // Verify that the method returns the correct SearchResponse object in the response body
     assertEquals(new SearchResponse(user1), response.getBody());
-}
-
-
-            // then
-            assertEquals(HttpStatus.OK, response.getStatusCode());
-            assertEquals(user1, response.getBody());
         }
 
 
